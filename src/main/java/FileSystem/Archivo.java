@@ -54,6 +54,8 @@ public class Archivo {
         this.color = color;
     }
 
-    
+    public String toString() {
+        return nombre;
+    }
 
 }

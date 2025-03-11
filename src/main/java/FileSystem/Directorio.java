@@ -11,11 +11,13 @@ public class Directorio {
     private String nombre;
     private LinkedList<Archivo> archivos;  // Lista de archivos dentro del directorio
     private LinkedList<Directorio> subdirectorios;  // Lista de subdirectorios dentro del directorio
+    private Directorio padre;
 
-    public Directorio(String nombre) {
+    public Directorio(String nombre, Directorio padre) {
         this.nombre = nombre;
         this.archivos = new LinkedList<>();  // Inicializa la lista de archivos
         this.subdirectorios = new LinkedList<>();  // Inicializa la lista de subdirectorios
+        this.padre = padre;
     }
 
     // Método para agregar un archivo al directorio
@@ -39,6 +41,13 @@ public class Directorio {
         // Llama al método remove() de LinkedList para eliminar el subdirectorio
         return subdirectorios.remove(directorio);  // Devuelve true si se eliminó el subdirectorio
     }
+    
+    public String obtenerRuta() {
+        if (this.padre == null) { // Si no tiene padre, es la raíz
+            return "/" + nombre;
+        }
+        return padre.obtenerRuta() + "/" + nombre;
+    }
 
     // Getters
     public String getNombre() {
@@ -51,5 +60,17 @@ public class Directorio {
 
     public LinkedList<Directorio> getSubdirectorios() {
         return subdirectorios;  // Obtiene la lista de subdirectorios
+    }
+    
+    public void setPadre(Directorio padre) {
+        this.padre = padre;
+    }
+
+    public Directorio getPadre() {
+        return padre;
+    }
+    
+    public String toString() {
+        return nombre;
     }
 }
