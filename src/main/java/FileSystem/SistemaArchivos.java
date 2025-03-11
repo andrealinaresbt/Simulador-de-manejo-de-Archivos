@@ -21,7 +21,7 @@ public class SistemaArchivos {
     private Disco disco;
 
     public SistemaArchivos(int tamanoDisco) {
-        this.raiz = new Directorio("Raíz",null);
+        this.raiz = new Directorio("Raiz",null);
         this.disco = new Disco(tamanoDisco);
     }
 

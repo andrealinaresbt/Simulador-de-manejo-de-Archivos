@@ -6,6 +6,7 @@ package com.mycompany.proyecto2so;
 
 import FileSystem.Directorio;
 import FileSystem.SistemaArchivos;
+import GUIs.ModoAdmin;
 import javax.swing.JOptionPane;
 /**
  *
@@ -14,7 +15,7 @@ import javax.swing.JOptionPane;
 public class Main {
 
     public static void main(String[] args) {
-        
+        //pruebas main
         SistemaArchivos sistema = new SistemaArchivos(1000000);
         Directorio docs = new Directorio("Documentos", sistema.getRaiz());
         sistema.getRaiz().agregarDirectorio(docs);
@@ -30,10 +31,16 @@ public class Main {
         sistema.getRaiz().getSubdirectorios().getCabeza().getDato().getSubdirectorios().imprimir();
         System.out.println(sistema.getRaiz().getSubdirectorios().getCabeza().getDato().getNombre());
         
-        sistema.construirJTree();
-        sistema.mostrarJTree();
+        //sistema.construirJTree();
+        //sistema.mostrarJTree();
+        
+        
+        
+        
+        
+        //MAIN REAL
         // Opciones de selección
-        /*
+        
         String[] options = {"Modo Usuario", "Modo Administrador"};
         
         // Mostrar el cuadro de diálogo de selección
@@ -53,10 +60,11 @@ public class Main {
         
         
         if (modo.equals("admin")) {
+            ModoAdmin modoAdmin=new ModoAdmin(sistema);
+            modoAdmin.setVisible(true);
             
         } else if (modo.equals("usuario")) {
             
         }
- */
     }
 }
