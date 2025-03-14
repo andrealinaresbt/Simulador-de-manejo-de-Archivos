@@ -123,9 +123,9 @@ public class SistemaArchivos {
         // Mostrar el árbol en un JScrollPane
         JScrollPane scrollPane = new JScrollPane(tree);
         frame.add(scrollPane);
-
+        
         frame.setSize(400, 500);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
     

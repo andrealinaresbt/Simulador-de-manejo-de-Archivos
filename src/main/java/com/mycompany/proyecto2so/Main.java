@@ -26,17 +26,10 @@ public class Main {
         Directorio proyectos2 = new Directorio("Proyectos2", proyectos);
         proyectos.agregarDirectorio(proyectos2);
         
-        sistema.crearArchivo("tarea1.txt", 5, "azul", "/Raíz/Documentos");
-        //prueba
-        sistema.getRaiz().getSubdirectorios().getCabeza().getDato().getSubdirectorios().imprimir();
-        System.out.println(sistema.getRaiz().getSubdirectorios().getCabeza().getDato().getNombre());
-        
+        sistema.crearArchivo("tarea1.txt", 5, "azul", "/Raiz/Documentos");
         //sistema.construirJTree();
-        //sistema.mostrarJTree();
-        
-        
-        
-        
+        //sistema.mostrarJTree();  
+
         
         //MAIN REAL
         // Opciones de selección
