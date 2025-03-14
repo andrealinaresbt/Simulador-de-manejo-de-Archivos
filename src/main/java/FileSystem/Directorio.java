@@ -54,6 +54,11 @@ public class Directorio {
         return nombre;  // Obtiene el nombre del directorio
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+
     public LinkedList<Archivo> getArchivos() {
         return archivos;  // Obtiene la lista de archivos
     }

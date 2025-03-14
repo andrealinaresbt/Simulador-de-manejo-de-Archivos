@@ -14,19 +14,17 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreeSelectionModel;
-
 /**
  *
  * @author Gabriel
  */
-public class CrearDirectorio extends javax.swing.JFrame {
+public class ActualizarDirectorio extends javax.swing.JFrame {
     private static SistemaArchivos sistemaArchivos;
     private String rutaSeleccionada;
-    private Directorio directorio;
     /**
-     * Creates new form CrearDirectorio
+     * Creates new form ActualizarDirectorio
      */
-    public CrearDirectorio(SistemaArchivos sistemaArchivos) {
+    public ActualizarDirectorio(SistemaArchivos sistemaArchivos) {
         this.sistemaArchivos=sistemaArchivos;
         initComponents();
         setLocationRelativeTo(null);
@@ -41,13 +39,25 @@ public class CrearDirectorio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
-        jLabel1.setText("Nombre del nuevo directorio");
+        jLabel2.setText("Nuevo nombre");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setText("Actualizar directorio");
+
+        jLabel3.setText("Nuevo nombre");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Seleccionar directorio");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -56,19 +66,10 @@ public class CrearDirectorio extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel2.setText("(donde será creado)");
-
-        jButton2.setText("Crear directorio");
+        jButton2.setText("Actualizar directorio");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
-            }
-        });
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
             }
         });
 
@@ -79,78 +80,90 @@ public class CrearDirectorio extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(141, 141, 141)
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(130, 130, 130)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(13, 13, 13)
-                                .addComponent(jLabel2))
-                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1)))))
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(94, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(83, Short.MAX_VALUE)
+                .addGap(43, 43, 43)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel2))
-                .addGap(65, 65, 65)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addGap(40, 40, 40)
                 .addComponent(jButton2)
-                .addGap(48, 48, 48))
+                .addGap(49, 49, 49))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // Nuevo nombre
+        
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Seleccionar directorio
-        JDialog dialog = new JDialog(this, "Seleccionar Directorio Padre", true);
+        // Crear una nueva ventana emergente (JDialog)
+        JDialog dialog = new JDialog(this, "Seleccionar Directorio", true);
         dialog.setLayout(new BorderLayout());
-
-        //Construir el JTree con los datos del sistema de archivos
+        
+        // Construir el JTree con los datos del sistema de archivos
         JTree tree = sistemaArchivos.construirJTree();
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-        //seleccionar un directorio y cerrar la ventana
+        // Evento para seleccionar un directorio y cerrar la ventana
         tree.addTreeSelectionListener(e -> {
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
             if (selectedNode != null) {
-                String ruta = "/" + obtenerRutaDesdeNodo(selectedNode);
-                System.out.println("Ruta generada: " + ruta);
+                String ruta = obtenerRutaDesdeNodo(selectedNode);
+                ruta="/"+ruta;
+                System.out.println("Ruta generada: " + ruta); 
+                Directorio directorio = sistemaArchivos.buscarDirectorioPorRuta(sistemaArchivos.getRaiz(), ruta);
 
-                directorio = sistemaArchivos.buscarDirectorioPorRuta(sistemaArchivos.getRaiz(), ruta);
+                //Verifica que sea un directorio y no un archivo
                 if (directorio != null) {
                     rutaSeleccionada=ruta;
-                    JOptionPane.showMessageDialog(this, "Directorio padre seleccionado: " + ruta);
-                    dialog.dispose(); // Cierra el diálogo
+                    JOptionPane.showMessageDialog(this, "Directorio seleccionado: " + ruta);
+                    dialog.dispose(); // Cierra el diálogo al seleccionar
                 } else {
                     JOptionPane.showMessageDialog(this, "El elemento seleccionado no es un directorio válido.");
+                    ruta=null;
                 }
             }
         });
 
+        // Mostrar el árbol en un JScrollPane
         JScrollPane scrollPane = new JScrollPane(tree);
         dialog.add(scrollPane, BorderLayout.CENTER);
+
+        //Configurar tamaño y visibilidad de la ventana
         dialog.setSize(400, 500);
         dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        dialog.setVisible(true);  
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // Crear directorio
-        String nombre=jTextField1.getText();
+        // Actualizar directorio
+        String nombre =jTextField1.getText();
         String nombreVerificacion=jTextField1.getText().trim();
         
         if (nombreVerificacion.isEmpty()) {
@@ -160,18 +173,20 @@ public class CrearDirectorio extends javax.swing.JFrame {
         
         if (rutaSeleccionada == null || rutaSeleccionada.trim().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Seleccione una ruta válida.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
+            return;
         }
- 
-        Directorio nuevoDirectorio=new Directorio(nombre,directorio);
-        directorio.agregarDirectorio(nuevoDirectorio);
-        JOptionPane.showMessageDialog(this, "Directorio creado correctamente en: " + rutaSeleccionada);      
+        
+        Directorio directorio =sistemaArchivos.buscarDirectorioPorRuta(sistemaArchivos.getRaiz(), rutaSeleccionada);
+        if (directorio==sistemaArchivos.getRaiz()){
+            JOptionPane.showMessageDialog(this, "Directorio seleccionado invalido", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        directorio.setNombre(nombre);
+        JOptionPane.showMessageDialog(this, "Directorio actualizado", "Error", JOptionPane.ERROR_MESSAGE);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // Nombre
-    }//GEN-LAST:event_jTextField1ActionPerformed
     
+//️ Método para obtener la ruta desde el nodo seleccionado
     private String obtenerRutaDesdeNodo(DefaultMutableTreeNode node) {
         StringBuilder ruta = new StringBuilder(node.toString());
         TreeNode parent = node.getParent();
@@ -204,20 +219,20 @@ public class CrearDirectorio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CrearDirectorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarDirectorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CrearDirectorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarDirectorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CrearDirectorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarDirectorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CrearDirectorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ActualizarDirectorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CrearDirectorio(sistemaArchivos).setVisible(true);
+                new ActualizarDirectorio(sistemaArchivos).setVisible(true);
             }
         });
     }
@@ -227,6 +242,7 @@ public class CrearDirectorio extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

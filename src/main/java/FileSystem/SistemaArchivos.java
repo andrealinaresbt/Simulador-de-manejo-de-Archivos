@@ -42,22 +42,6 @@ public class SistemaArchivos {
         dirSeleccionado.agregarArchivo(nuevoArchivo);
     }
 
-    public void eliminarArchivo(String nombre) {
-        LinkedList<Archivo> archivos = raiz.getArchivos();
-        Node<Archivo> actual = archivos.getCabeza(); // Obtener el primer nodo de la lista
-        Node<Archivo> previo = null;
-
-        while (actual != null) {
-            if (actual.getDato().getNombre().equals(nombre)) { // Usamos getDato()
-                disco.liberarBloques(actual.getDato().getPrimerBloque());
-                archivos.remove(actual.getDato()); // Usamos el método remove() de tu LinkedList
-                break;
-            }
-            previo = actual;
-            actual = actual.getSiguiente();
-        }
-    }
-
     public void mostrarArchivos() {
         Node<Archivo> actual = raiz.getArchivos().getCabeza();
         while (actual != null) {
@@ -94,7 +78,7 @@ public class SistemaArchivos {
     private void construirNodos(Directorio dir, DefaultMutableTreeNode nodoPadre) {
         if (dir == null) return;
 
-        // ➡️ Añadir archivos del directorio
+        // Añadir archivos del directorio
         Node<Archivo> archivoActual = dir.getArchivos().getCabeza();
         while (archivoActual != null) {
             Archivo archivo = archivoActual.getDato();
@@ -105,7 +89,7 @@ public class SistemaArchivos {
             archivoActual = archivoActual.getSiguiente();
         }
 
-        // ➡️ Añadir subdirectorios de forma recursiva
+        // Añadir subdirectorios de forma recursiva
         Node<Directorio> subdirActual = dir.getSubdirectorios().getCabeza();
         while (subdirActual != null) {
             Directorio subdirectorio = subdirActual.getDato();
@@ -129,6 +113,25 @@ public class SistemaArchivos {
         frame.setVisible(true);
     }
     
+    public Archivo buscarArchivoPorRuta(Directorio actual, String rutaBuscada) {
+    // Verificar si el directorio actual contiene el archivo
+        for (Node<Archivo> archivoNode = actual.getArchivos().getCabeza(); archivoNode != null; archivoNode = archivoNode.getSiguiente()) {
+            Archivo archivo = archivoNode.getDato();
+            if ((actual.obtenerRuta() + "/" + archivo.getNombre()).equals(rutaBuscada)) {
+                return archivo;
+            }
+        }
+
+        // Buscar en los subdirectorios de manera recursiva
+        for (Node<Directorio> dirNode = actual.getSubdirectorios().getCabeza(); dirNode != null; dirNode = dirNode.getSiguiente()) {
+            Archivo encontrado = buscarArchivoPorRuta(dirNode.getDato(), rutaBuscada);
+            if (encontrado != null) {
+                return encontrado;
+            }
+        }
+
+        return null; // No se encontró el archivo
+    }
     
     public Directorio getRaiz() {
         return raiz;

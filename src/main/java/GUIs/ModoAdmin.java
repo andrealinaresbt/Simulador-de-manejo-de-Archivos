@@ -19,6 +19,7 @@ public class ModoAdmin extends javax.swing.JFrame {
     public ModoAdmin(SistemaArchivos sistemaArchivos) {
         this.sistemaArchivos=sistemaArchivos;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -164,10 +165,14 @@ public class ModoAdmin extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // actualizar archivo
+        ActualizarArchivo actualizarArchivo=new ActualizarArchivo(sistemaArchivos);
+        actualizarArchivo.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // eliminar archivo
+        EliminarArchivo eliminarArchivo =new EliminarArchivo(sistemaArchivos);
+        eliminarArchivo.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -186,10 +191,14 @@ public class ModoAdmin extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // actualizar directorio
+        ActualizarDirectorio actualizarDirectorio=new ActualizarDirectorio(sistemaArchivos);
+        actualizarDirectorio.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // Eliminar directorio
+        EliminarDirectorio eliminarDirectorio= new EliminarDirectorio(sistemaArchivos);
+        eliminarDirectorio.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**

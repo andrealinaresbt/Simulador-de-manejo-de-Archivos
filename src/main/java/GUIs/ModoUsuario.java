@@ -18,6 +18,7 @@ public class ModoUsuario extends javax.swing.JFrame {
     public ModoUsuario(SistemaArchivos sistemaArchivos) {
         this.sistemaArchivos=sistemaArchivos;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

@@ -7,11 +7,8 @@ package GUIs;
 import FileSystem.Directorio;
 import FileSystem.SistemaArchivos;
 import java.awt.BorderLayout;
-import java.util.concurrent.atomic.AtomicReference;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -31,6 +28,7 @@ public class CrearArchivo extends javax.swing.JFrame {
     public CrearArchivo(SistemaArchivos sistemaArchivos) {
         this.sistemaArchivos=sistemaArchivos;
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     private void seleccionarDirectorio() {
@@ -38,11 +36,11 @@ public class CrearArchivo extends javax.swing.JFrame {
         JDialog dialog = new JDialog(this, "Seleccionar Directorio", true);
         dialog.setLayout(new BorderLayout());
         
-        // ➡️ Construir el JTree con los datos del sistema de archivos
+        // Construir el JTree con los datos del sistema de archivos
         JTree tree = sistemaArchivos.construirJTree();
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-        // ➡️ Evento para seleccionar un directorio y cerrar la ventana
+        // Evento para seleccionar un directorio y cerrar la ventana
         tree.addTreeSelectionListener(e -> {
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
             if (selectedNode != null) {
@@ -51,7 +49,7 @@ public class CrearArchivo extends javax.swing.JFrame {
                 System.out.println("Ruta generada: " + ruta); 
                 Directorio directorio = sistemaArchivos.buscarDirectorioPorRuta(sistemaArchivos.getRaiz(), ruta);
 
-                // ✅ Verifica que sea un directorio y no un archivo
+                //Verifica que sea un directorio y no un archivo
                 if (directorio != null) {
                     rutaSeleccionada=ruta;
                     JOptionPane.showMessageDialog(this, "Directorio seleccionado: " + ruta);
@@ -63,17 +61,17 @@ public class CrearArchivo extends javax.swing.JFrame {
             }
         });
 
-        // ➡️ Mostrar el árbol en un JScrollPane
+        // Mostrar el árbol en un JScrollPane
         JScrollPane scrollPane = new JScrollPane(tree);
         dialog.add(scrollPane, BorderLayout.CENTER);
 
-        // ➡️ Configurar tamaño y visibilidad de la ventana
+        //Configurar tamaño y visibilidad de la ventana
         dialog.setSize(400, 500);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);  
     }
 
-    // ➡️ Método para obtener la ruta desde el nodo seleccionado
+    //️ Método para obtener la ruta desde el nodo seleccionado
     private String obtenerRutaDesdeNodo(DefaultMutableTreeNode node) {
         StringBuilder ruta = new StringBuilder(node.toString());
         TreeNode parent = node.getParent();
@@ -90,7 +88,7 @@ public class CrearArchivo extends javax.swing.JFrame {
         return ruta.toString();
     }
 
-    // ➡️ GETTER para la ruta seleccionada (por si la necesitas luego)
+    //️ GETTER para la ruta seleccionada
     public String getRutaSeleccionada() {
         return rutaSeleccionada;
     }
