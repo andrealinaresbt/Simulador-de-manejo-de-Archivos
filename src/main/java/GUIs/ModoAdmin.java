@@ -279,7 +279,72 @@ System.out.println("Vista actualizada.");
     }//GEN-LAST:event_viewSDActionPerformed
 
     private void viewSD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSD1ActionPerformed
-        // TODO add your handling code here:
+// Crear una instancia de la clase TablaAsignacionArchivos para actualizar la tabla
+    TablaAsignacionArchivos tablaAsignacion = new TablaAsignacionArchivos(sistemaArchivos);
+    tablaAsignacion.actualizarTabla();  // Llamar al método para actualizar la tabla
+    System.out.println("Tabla actualizada.");
+        
+// Obtener la tabla actualizada
+    JTable tabla = tablaAsignacion.getTabla();
+
+    // Crear un TableCellRenderer para la columna de color
+    tabla.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if (value != null) {
+                try {
+                    // Si el valor es un nombre de color, lo decodificamos a un color
+                    // Asegúrate de que el valor sea un color reconocido
+                    if (value instanceof String) {
+                        String colorStr = (String) value;
+                        Color colorObj = getColorByName(colorStr);
+                        comp.setBackground(colorObj);  // Cambiar el color de fondo
+                    }
+                } catch (Exception e) {
+                    comp.setBackground(null);  // Si no es un color válido, dejar el fondo por defecto
+                }
+            }
+            return comp;
+        }
+
+        // Método para obtener un color por su nombre
+        private Color getColorByName(String colorName) {
+            switch (colorName.toLowerCase()) {
+                case "azul":
+                    return Color.BLUE;
+                case "rojo":
+                    return Color.RED;
+                case "verde":
+                    return Color.GREEN;
+                case "amarillo":
+                    return Color.YELLOW;
+                // Puedes agregar más colores si lo necesitas
+                default:
+                    return Color.WHITE;  // Color por defecto si no es reconocido
+            }
+        }
+    });
+
+    // Crear un JScrollPane para la tabla (esto hace que la tabla sea desplazable)
+    JScrollPane scrollPane = new JScrollPane(tabla);
+
+    // Asegúrate de agregar el JScrollPane a un contenedor gráfico visible
+    JFrame frame = new JFrame("Tabla de Asignación de Archivos");
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+    // Suponiendo que tienes un JPanel o algún contenedor para agregar la tabla
+    JPanel panel = new JPanel();
+    panel.setLayout(new BorderLayout());  // Usamos BorderLayout para que ocupe todo el espacio
+    panel.add(scrollPane, BorderLayout.CENTER);  // Agregamos el JScrollPane al centro
+
+    frame.add(panel);  // Agregamos el panel al JFrame
+    frame.setSize(500, 400);  // Define el tamaño del frame
+    frame.setVisible(true);  // Hacemos visible la ventana
+
+                                  
+
     }//GEN-LAST:event_viewSD1ActionPerformed
 
     private void viewSD2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSD2ActionPerformed

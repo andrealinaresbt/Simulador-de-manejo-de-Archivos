@@ -30,7 +30,7 @@ public viewDisco(SistemaArchivos sistemaDeArchivos) {
     // Configurar la ventana
     setTitle("Simulación de Disco");
     setSize(400, 300);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     
     // Configurar el layout dinámico
     panelBloques = new JPanel();
