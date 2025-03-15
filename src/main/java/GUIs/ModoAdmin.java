@@ -421,7 +421,7 @@ sistemaArchivos.cargarEstadoDesdeArchivoJSON("TXT/ArchivoEstado.json");
 
     // Asegúrate de agregar el JScrollPane a un contenedor gráfico visible
     JFrame frame = new JFrame("Tabla de Asignación de Archivos");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     // Suponiendo que tienes un JPanel o algún contenedor para agregar la tabla
     JPanel panel = new JPanel();
