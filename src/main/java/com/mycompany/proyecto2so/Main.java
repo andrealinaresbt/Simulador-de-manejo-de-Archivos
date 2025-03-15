@@ -7,6 +7,7 @@ package com.mycompany.proyecto2so;
 import FileSystem.Directorio;
 import FileSystem.SistemaArchivos;
 import GUIs.ModoAdmin;
+import GUIs.ModoUsuario;
 import javax.swing.JOptionPane;
 /**
  *
@@ -57,7 +58,8 @@ public class Main {
             modoAdmin.setVisible(true);
             
         } else if (modo.equals("usuario")) {
-            
+            ModoUsuario modoUsuario= new ModoUsuario(sistema);
+            modoUsuario.setVisible(true);
         }
     }
 }
