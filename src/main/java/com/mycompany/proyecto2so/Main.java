@@ -48,8 +48,6 @@ public class Main {
         );
 
         String modo = (choice == 1) ? "admin" : "usuario";
-       
-        
         
         if (modo.equals("admin")) {
             ModoAdmin modoAdmin=new ModoAdmin(sistema);
