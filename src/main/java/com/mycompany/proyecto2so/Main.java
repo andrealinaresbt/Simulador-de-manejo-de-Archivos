@@ -25,13 +25,11 @@ public class Main {
         docs.agregarDirectorio(proyectos);
         
         Directorio proyectos2 = new Directorio("Proyectos2", proyectos);
-        proyectos.agregarDirectorio(proyectos2);
-        
+        proyectos.agregarDirectorio(proyectos2);   
         sistema.crearArchivo("tarea1.txt", 5, "azul", "/Raiz/Documentos");
-        //sistema.construirJTree();
-        //sistema.mostrarJTree();  
 
-        
+
+        //------------------------------------------------------------------
         //MAIN REAL
         // Opciones de selección
         
@@ -57,7 +55,8 @@ public class Main {
             ModoAdmin modoAdmin=new ModoAdmin(sistema);
             modoAdmin.setVisible(true);
             
-        } else if (modo.equals("usuario")) {
+        } 
+        else if (modo.equals("usuario")) {
             ModoUsuario modoUsuario= new ModoUsuario(sistema);
             modoUsuario.setVisible(true);
         }
