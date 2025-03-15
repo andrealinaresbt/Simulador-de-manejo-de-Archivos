@@ -9,24 +9,23 @@ package Almacenamiento;
  * @author Andrea
  */
 public class Bloque {
-
     private int id;
-    private Bloque siguiente;
+    private Bloque siguiente; // Para asignación encadenada
 
     public Bloque(int id) {
         this.id = id;
         this.siguiente = null;
     }
 
-    public void setSiguiente(Bloque siguiente) {
-        this.siguiente = siguiente;
+    public int getId() {
+        return id;
     }
 
     public Bloque getSiguiente() {
         return siguiente;
     }
 
-    public int getId() {
-        return id;
+    public void setSiguiente(Bloque siguiente) {
+        this.siguiente = siguiente;
     }
 }

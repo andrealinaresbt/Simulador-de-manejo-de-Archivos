@@ -9,13 +9,14 @@ package Almacenamiento;
  * @author Andrea
  */
 public class Disco {
-
     private Bloque[] bloques;
     private boolean[] ocupado;
+    private int bloquesLibres;
 
     public Disco(int totalBloques) {
         this.bloques = new Bloque[totalBloques];
         this.ocupado = new boolean[totalBloques];
+        this.bloquesLibres = totalBloques;
 
         for (int i = 0; i < totalBloques; i++) {
             bloques[i] = new Bloque(i);
@@ -24,6 +25,11 @@ public class Disco {
     }
 
     public int asignarBloques(int cantidad) {
+        if (cantidad > bloquesLibres) {
+            System.out.println("Error: No hay suficientes bloques disponibles.");
+            return -1;
+        }
+
         int primerBloque = -1, anterior = -1;
 
         for (int i = 0; i < bloques.length && cantidad > 0; i++) {
@@ -37,6 +43,7 @@ public class Disco {
                 anterior = i;
                 ocupado[i] = true;
                 cantidad--;
+                bloquesLibres--;
             }
         }
 
@@ -44,21 +51,55 @@ public class Disco {
     }
 
     public void liberarBloques(int primerBloque) {
-        Bloque actual = bloques[primerBloque];
+    if (primerBloque < 0 || primerBloque >= bloques.length || !ocupado[primerBloque]) {
+        System.out.println("Error: Intentando liberar un bloque inválido o ya libre.");
+        return;
+    }
 
-        while (actual != null) {
-            ocupado[actual.getId()] = false;
-            actual = actual.getSiguiente();
+    Bloque actual = bloques[primerBloque];
+    System.out.println("Liberando bloques a partir del bloque: " + primerBloque);
+
+    while (actual != null && ocupado[actual.getId()]) {
+        System.out.println("Liberando bloque con ID: " + actual.getId());
+        ocupado[actual.getId()] = false;  // Marca el bloque como libre
+        bloquesLibres++;
+        actual = actual.getSiguiente();
+    }
+} public void setOcupado(boolean[] estadoOcupado) {
+        if (estadoOcupado != null && estadoOcupado.length == ocupado.length) {
+            System.arraycopy(estadoOcupado, 0, this.ocupado, 0, estadoOcupado.length);
+        } else {
+            System.out.println("Error: El tamaño del estado ocupado no coincide.");
         }
     }
+
 
     public boolean hayEspacio(int cantidad) {
-        int libres = 0;
-        for (boolean b : ocupado) {
-            if (!b) {
-                libres++;
-            }
-        }
-        return libres >= cantidad;
+        return cantidad <= bloquesLibres;
     }
+    public int getTotalBloques() {
+    return bloques.length;
+}
+
+    public boolean[] getOcupado() {
+        return ocupado;
+    }
+
+    public int getBloquesLibres() {
+        return bloquesLibres;
+    }
+
+    public void setBloquesLibres(int bloquesLibres) {
+        this.bloquesLibres = bloquesLibres;
+    }
+// Método para marcar los bloques ocupados a partir del primer bloque de un archivo
+ // En la clase Disco
+public void marcarComoOcupado(int bloque) {
+    if (bloque >= 0 && bloque < ocupado.length) {
+        ocupado[bloque] = true;  // Marcamos el bloque como ocupado
+    } else {
+        System.out.println("Error: Índice de bloque fuera de rango.");
+    }
+}
+
 }

@@ -1,6 +1,8 @@
 package FileSystem;
 
+import Almacenamiento.Disco;
 import EDD.LinkedList; // Asegúrate de que esta clase esté correctamente implementada
+import com.google.gson.annotations.Expose;
 
 /**
  *
@@ -11,7 +13,11 @@ public class Directorio {
     private String nombre;
     private LinkedList<Archivo> archivos;  // Lista de archivos dentro del directorio
     private LinkedList<Directorio> subdirectorios;  // Lista de subdirectorios dentro del directorio
-    private Directorio padre;
+    
+    private Disco disco;  // Referencia a Disco
+    
+    @Expose
+    private transient Directorio padre;
 
     public Directorio(String nombre, Directorio padre) {
         this.nombre = nombre;
@@ -32,9 +38,11 @@ public class Directorio {
 
     // Método para eliminar un archivo del directorio
     public boolean eliminarArchivo(Archivo archivo) {
-        // Llama al método remove() de LinkedList para eliminar el archivo
-        return archivos.remove(archivo);  // Devuelve true si se eliminó el archivo
-    }
+    
+    return archivos.remove(archivo);  // Devuelve true si el archivo se eliminó correctamente
+}
+
+
 
     // Método para eliminar un subdirectorio del directorio
     public boolean eliminarDirectorio(Directorio directorio) {
@@ -75,8 +83,13 @@ public class Directorio {
         return padre;
     }
     
-    public String toString() {
-        return nombre;
+    
+    public boolean tieneSubdirectorios() {
+        return subdirectorios.tamaño() > 0;
     }
     
+    @Override
+    public String toString() {
+        return "Directorio[nombre=" + nombre + ", archivos=" + archivos + "]";
+    }
 }

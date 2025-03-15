@@ -8,10 +8,16 @@ import FileSystem.Archivo;
 import FileSystem.Directorio;
 import FileSystem.SistemaArchivos;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTree;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreeSelectionModel;
@@ -146,15 +152,101 @@ public class EliminarArchivo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // Eliminar archivo
-        if (rutaPadre == null || rutaPadre.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Seleccione un archivo.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+         // Eliminar archivo
+    if (rutaPadre == null || rutaPadre.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Seleccione un archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Buscar el directorio padre
+    Directorio directorio = sistemaArchivos.buscarDirectorioPorRuta(sistemaArchivos.getRaiz(), rutaPadre);
+    
+    if (directorio == null) {
+        JOptionPane.showMessageDialog(this, "El directorio no se encuentra.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Llamar a eliminarArchivoEnDirectorio
+    sistemaArchivos.eliminarArchivoEnDirectorio(directorio, archivo);
+
+    JOptionPane.showMessageDialog(this, "Archivo eliminado.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+    
+    // Crear la ventana de vistaDisco
+    System.out.println("Creando vistaDisco...");
+    viewDisco vistaDisco = new viewDisco(sistemaArchivos);
+    vistaDisco.actualizarVista();
+    vistaDisco.setVisible(true);
+    System.out.println("Ventana vistaDisco visible.");
+
+    // Actualizar vista
+    vistaDisco.actualizarVista();
+    System.out.println("Vista actualizada.");
+    
+    // Crear una instancia de la clase TablaAsignacionArchivos para actualizar la tabla
+    TablaAsignacionArchivos tablaAsignacion = new TablaAsignacionArchivos(sistemaArchivos);
+    tablaAsignacion.actualizarTabla();  // Llamar al método para actualizar la tabla
+    System.out.println("Tabla actualizada.");
+
+    // Obtener la tabla actualizada
+    JTable tabla = tablaAsignacion.getTabla();
+
+    // Crear un TableCellRenderer para la columna de color
+    tabla.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if (value != null) {
+                try {
+                    // Si el valor es un nombre de color, lo decodificamos a un color
+                    // Asegúrate de que el valor sea un color reconocido
+                    if (value instanceof String) {
+                        String colorStr = (String) value;
+                        Color colorObj = getColorByName(colorStr);
+                        comp.setBackground(colorObj);  // Cambiar el color de fondo
+                    }
+                } catch (Exception e) {
+                    comp.setBackground(null);  // Si no es un color válido, dejar el fondo por defecto
+                }
+            }
+            return comp;
         }
-        Directorio directorio =sistemaArchivos.buscarDirectorioPorRuta(sistemaArchivos.getRaiz(), rutaPadre);
-        directorio.eliminarArchivo(archivo);
-        JOptionPane.showMessageDialog(this, "Archivo eliminado.", "Error", JOptionPane.ERROR_MESSAGE);
-        
+
+        // Método para obtener un color por su nombre
+        private Color getColorByName(String colorName) {
+            switch (colorName.toLowerCase()) {
+                case "azul":
+                    return Color.BLUE;
+                case "rojo":
+                    return Color.RED;
+                case "verde":
+                    return Color.GREEN;
+                case "amarillo":
+                    return Color.YELLOW;
+                // Puedes agregar más colores si lo necesitas
+                default:
+                    return Color.WHITE;  // Color por defecto si no es reconocido
+            }
+        }
+    });
+
+    // Crear un JScrollPane para la tabla (esto hace que la tabla sea desplazable)
+    JScrollPane scrollPane = new JScrollPane(tabla);
+
+    // Asegúrate de agregar el JScrollPane a un contenedor gráfico visible
+    JFrame frame = new JFrame("Tabla de Asignación de Archivos");
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+    // Suponiendo que tienes un JPanel o algún contenedor para agregar la tabla
+    JPanel panel = new JPanel();
+    panel.setLayout(new BorderLayout());  // Usamos BorderLayout para que ocupe todo el espacio
+    panel.add(scrollPane, BorderLayout.CENTER);  // Agregamos el JScrollPane al centro
+
+    frame.add(panel);  // Agregamos el panel al JFrame
+    frame.setSize(500, 400);  // Define el tamaño del frame
+    frame.setVisible(true);  // Hacemos visible la ventana
+
+       
     }//GEN-LAST:event_jButton2ActionPerformed
     
     private String obtenerRutaDesdeNodo(DefaultMutableTreeNode node) {
