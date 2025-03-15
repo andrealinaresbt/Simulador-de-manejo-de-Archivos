@@ -65,7 +65,13 @@ public class Disco {
         bloquesLibres++;
         actual = actual.getSiguiente();
     }
-}
+} public void setOcupado(boolean[] estadoOcupado) {
+        if (estadoOcupado != null && estadoOcupado.length == ocupado.length) {
+            System.arraycopy(estadoOcupado, 0, this.ocupado, 0, estadoOcupado.length);
+        } else {
+            System.out.println("Error: El tamaño del estado ocupado no coincide.");
+        }
+    }
 
 
     public boolean hayEspacio(int cantidad) {
@@ -78,5 +84,22 @@ public class Disco {
     public boolean[] getOcupado() {
         return ocupado;
     }
+
+    public int getBloquesLibres() {
+        return bloquesLibres;
+    }
+
+    public void setBloquesLibres(int bloquesLibres) {
+        this.bloquesLibres = bloquesLibres;
+    }
+// Método para marcar los bloques ocupados a partir del primer bloque de un archivo
+ // En la clase Disco
+public void marcarComoOcupado(int bloque) {
+    if (bloque >= 0 && bloque < ocupado.length) {
+        ocupado[bloque] = true;  // Marcamos el bloque como ocupado
+    } else {
+        System.out.println("Error: Índice de bloque fuera de rango.");
+    }
+}
 
 }

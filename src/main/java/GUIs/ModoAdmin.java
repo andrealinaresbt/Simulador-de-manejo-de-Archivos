@@ -5,6 +5,14 @@
 package GUIs;
 
 import FileSystem.SistemaArchivos;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -41,6 +49,9 @@ public class ModoAdmin extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         viewSD = new javax.swing.JButton();
+        viewSD1 = new javax.swing.JButton();
+        viewSD2 = new javax.swing.JButton();
+        viewSD3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,28 +121,58 @@ public class ModoAdmin extends javax.swing.JFrame {
             }
         });
 
+        viewSD1.setText("Tabla de estado");
+        viewSD1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewSD1ActionPerformed(evt);
+            }
+        });
+
+        viewSD2.setText("Guardar");
+        viewSD2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewSD2ActionPerformed(evt);
+            }
+        });
+
+        viewSD3.setText("Cargar versiones");
+        viewSD3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewSD3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(viewSD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(329, 329, 329))
             .addGroup(layout.createSequentialGroup()
                 .addGap(278, 278, 278)
+                .addComponent(jLabel1)
+                .addContainerGap(301, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addContainerGap(291, Short.MAX_VALUE))
+                    .addComponent(viewSD2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewSD3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(viewSD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(viewSD1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(329, 329, 329))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,9 +195,19 @@ public class ModoAdmin extends javax.swing.JFrame {
                 .addComponent(jButton7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(viewSD)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(viewSD1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(viewSD2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(viewSD3)
+                        .addGap(56, 56, 56))))
         );
 
         pack();
@@ -227,6 +278,100 @@ System.out.println("Vista actualizada.");
 
     }//GEN-LAST:event_viewSDActionPerformed
 
+    private void viewSD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSD1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_viewSD1ActionPerformed
+
+    private void viewSD2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSD2ActionPerformed
+      // Crear una instancia de la clase que contiene el método guardarEstadoEnArchivoTexto
+sistemaArchivos.guardarEstadoEnArchivoJSON("TXT/ArchivoEstado.json");
+
+
+    }//GEN-LAST:event_viewSD2ActionPerformed
+
+    private void viewSD3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSD3ActionPerformed
+             // Crear una instancia de la clase que contiene el método guardarEstadoEnArchivoTexto
+sistemaArchivos.cargarEstadoDesdeArchivoJSON("TXT/ArchivoEstado.json");
+// Crear la ventana de vistaDisco
+    System.out.println("Creando vistaDisco...");
+    viewDisco vistaDisco = new viewDisco(sistemaArchivos);
+    vistaDisco.actualizarVista();
+    vistaDisco.setVisible(true);
+    System.out.println("Ventana vistaDisco visible.");
+
+    // Actualizar vista
+    vistaDisco.actualizarVista();
+    System.out.println("Vista actualizada.");
+    
+    // Crear una instancia de la clase TablaAsignacionArchivos para actualizar la tabla
+    TablaAsignacionArchivos tablaAsignacion = new TablaAsignacionArchivos(sistemaArchivos);
+    tablaAsignacion.actualizarTabla();  // Llamar al método para actualizar la tabla
+    System.out.println("Tabla actualizada.");
+
+    // Obtener la tabla actualizada
+    JTable tabla = tablaAsignacion.getTabla();
+
+    // Crear un TableCellRenderer para la columna de color
+    tabla.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if (value != null) {
+                try {
+                    // Si el valor es un nombre de color, lo decodificamos a un color
+                    // Asegúrate de que el valor sea un color reconocido
+                    if (value instanceof String) {
+                        String colorStr = (String) value;
+                        Color colorObj = getColorByName(colorStr);
+                        comp.setBackground(colorObj);  // Cambiar el color de fondo
+                    }
+                } catch (Exception e) {
+                    comp.setBackground(null);  // Si no es un color válido, dejar el fondo por defecto
+                }
+            }
+            return comp;
+        }
+
+        // Método para obtener un color por su nombre
+        private Color getColorByName(String colorName) {
+            switch (colorName.toLowerCase()) {
+                case "azul":
+                    return Color.BLUE;
+                case "rojo":
+                    return Color.RED;
+                case "verde":
+                    return Color.GREEN;
+                case "amarillo":
+                    return Color.YELLOW;
+                // Puedes agregar más colores si lo necesitas
+                default:
+                    return Color.WHITE;  // Color por defecto si no es reconocido
+            }
+        }
+    });
+
+    // Crear un JScrollPane para la tabla (esto hace que la tabla sea desplazable)
+    JScrollPane scrollPane = new JScrollPane(tabla);
+
+    // Asegúrate de agregar el JScrollPane a un contenedor gráfico visible
+    JFrame frame = new JFrame("Tabla de Asignación de Archivos");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    // Suponiendo que tienes un JPanel o algún contenedor para agregar la tabla
+    JPanel panel = new JPanel();
+    panel.setLayout(new BorderLayout());  // Usamos BorderLayout para que ocupe todo el espacio
+    panel.add(scrollPane, BorderLayout.CENTER);  // Agregamos el JScrollPane al centro
+
+    frame.add(panel);  // Agregamos el panel al JFrame
+    frame.setSize(500, 400);  // Define el tamaño del frame
+    frame.setVisible(true);  // Hacemos visible la ventana
+
+       
+                                            
+
+    }//GEN-LAST:event_viewSD3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -273,5 +418,8 @@ System.out.println("Vista actualizada.");
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton viewSD;
+    private javax.swing.JButton viewSD1;
+    private javax.swing.JButton viewSD2;
+    private javax.swing.JButton viewSD3;
     // End of variables declaration//GEN-END:variables
 }

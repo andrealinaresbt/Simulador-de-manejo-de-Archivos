@@ -2,6 +2,7 @@ package FileSystem;
 
 import Almacenamiento.Disco;
 import EDD.LinkedList; // Asegúrate de que esta clase esté correctamente implementada
+import com.google.gson.annotations.Expose;
 
 /**
  *
@@ -12,8 +13,11 @@ public class Directorio {
     private String nombre;
     private LinkedList<Archivo> archivos;  // Lista de archivos dentro del directorio
     private LinkedList<Directorio> subdirectorios;  // Lista de subdirectorios dentro del directorio
-    private Directorio padre;
+    
     private Disco disco;  // Referencia a Disco
+    
+    @Expose
+    private transient Directorio padre;
 
     public Directorio(String nombre, Directorio padre) {
         this.nombre = nombre;
@@ -79,8 +83,13 @@ public class Directorio {
         return padre;
     }
     
-    public String toString() {
-        return nombre;
+    
+    public boolean tieneSubdirectorios() {
+        return subdirectorios.tamaño() > 0;
     }
     
+    @Override
+    public String toString() {
+        return "Directorio[nombre=" + nombre + ", archivos=" + archivos + "]";
+    }
 }

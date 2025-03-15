@@ -7,9 +7,20 @@ package FileSystem;
 import Almacenamiento.Disco;
 import EDD.LinkedList;
 import EDD.Node;
+import FileSystem.Directorio;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import java.io.File;
+import java.lang.reflect.Type;
 
 /**
  *
@@ -28,12 +39,14 @@ public class SistemaArchivos {
     public void crearArchivo(String nombre, int tamano, String color, String rutaDirectorio) {
         if (!disco.hayEspacio(tamano)) {
             System.out.println("No hay espacio suficiente en el disco.");
-            return;
+             JOptionPane.showMessageDialog(null, "No hay espacio suficiente en el disco.", "Error", JOptionPane.ERROR_MESSAGE);
+            ;
         }
 
         Directorio dirSeleccionado = buscarDirectorioPorRuta(raiz, rutaDirectorio);
         if (dirSeleccionado == null) {
             System.out.println("Directorio no encontrado.");
+             JOptionPane.showMessageDialog(null, "Directorio no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -57,6 +70,7 @@ public class SistemaArchivos {
             directorio.eliminarArchivo(archivo);
         } else {
             System.out.println("No se puede eliminar el archivo.");
+             JOptionPane.showMessageDialog(null, "No se puede eliminar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
         }}
     
     public Directorio buscarDirectorioPorRuta(Directorio actual, String rutaBuscada) {
@@ -156,6 +170,116 @@ public class SistemaArchivos {
     public void setDisco(Disco disco) {
         this.disco = disco;
     }
-    
-    
+    public LinkedList<Directorio> obtenerTodosLosDirectorios() {
+        LinkedList<Directorio> directorios = new LinkedList<>();
+        obtenerDirectoriosRecursivo(raiz, directorios);
+        return directorios;
+    }
+
+    // Método recursivo para recorrer directorios y obtener sus archivos
+    private void obtenerDirectoriosRecursivo(Directorio directorio, LinkedList<Directorio> directorios) {
+        directorios.add(directorio);  // Añadimos el directorio actual
+        
+        LinkedList<Directorio> subdirectorios = directorio.getSubdirectorios();
+Node<Directorio> actual = subdirectorios.getCabeza();  // Obtiene el primer nodo
+while (actual != null) {
+    Directorio subdirectorio = actual.getDato();  // Obtienes el subdirectorio del nodo
+    // Código para procesar el subdirectorio
+    actual = actual.getSiguiente();  // Avanzas al siguiente nodo
 }
+
+        }
+
+public void guardarEstadoEnArchivoJSON(String rutaArchivo) {
+    try (FileWriter writer = new FileWriter(rutaArchivo)) {
+        Gson gson = new Gson();
+
+        // Crear un objeto JsonObject para estructurar los datos
+        JsonObject jsonObject = new JsonObject();
+
+        // Verificar que la raíz no sea nula
+        if (this.raiz != null) {
+            this.raiz.setPadre(null);  // Evitar referencias circulares
+            // Guardar el directorio en el JsonObject
+            jsonObject.add("directorio", gson.toJsonTree(this.raiz)); 
+        }
+
+        // Guardar el estado de los bloques ocupados en el JsonObject
+        jsonObject.add("bloquesOcupados", gson.toJsonTree(this.disco.getOcupado())); 
+
+        // Escribir el objeto JsonObject en el archivo
+        gson.toJson(jsonObject, writer); 
+
+        JOptionPane.showMessageDialog(null, "Estado guardado correctamente en JSON.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Error al guardar el estado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+
+public void cargarEstadoDesdeArchivoJSON(String rutaArchivo) {
+    try (FileReader reader = new FileReader(rutaArchivo)) {
+        Gson gson = new Gson();
+
+        // Leer el archivo completo como un mapa de claves y valores
+        JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+
+        // Leer el estado del directorio y los bloques ocupados
+        Directorio directorioCargado = gson.fromJson(jsonObject.get("directorio"), Directorio.class);
+        boolean[] bloquesOcupados = gson.fromJson(jsonObject.get("bloquesOcupados"), boolean[].class);
+
+        if (directorioCargado != null) {
+            this.raiz = directorioCargado;  // Asignar la raíz cargada desde JSON
+            reconstruirRelaciones(this.raiz, null);  // Reconstruir relaciones
+        }
+
+        // Reconstruir los bloques ocupados
+        this.disco.setOcupado(bloquesOcupados);  // Establecer el estado de los bloques ocupados
+
+        // Asegúrate de que los bloques estén correctamente asignados en los archivos cargados
+        asignarBloquesAFiles(this.raiz);
+
+        JOptionPane.showMessageDialog(null, "Estado cargado correctamente desde JSON.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Error al cargar el estado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+private void reconstruirRelaciones(Directorio directorioActual, Directorio padre) {
+    if (directorioActual != null) {
+        System.out.println("Reconstruyendo: " + directorioActual.getNombre());
+
+        directorioActual.setPadre(padre); // Asignar el padre correcto
+
+        // Iterar sobre todos los subdirectorios para reconstruir relaciones
+        if (directorioActual.getSubdirectorios() != null) {
+            Node<Directorio> nodoActual = directorioActual.getSubdirectorios().getCabeza();
+            while (nodoActual != null) {
+                reconstruirRelaciones(nodoActual.getDato(), directorioActual);
+                nodoActual = nodoActual.getSiguiente();
+            }
+        }
+    }
+}
+private void asignarBloquesAFiles(Directorio directorio) {
+    if (directorio != null && directorio.getArchivos() != null) {
+        Node<Archivo> archivoActual = directorio.getArchivos().getCabeza();
+        while (archivoActual != null) {
+            Archivo archivo = archivoActual.getDato();
+
+            // Si el archivo no tiene bloque asignado, asignamos uno
+            if (archivo.getPrimerBloque() == -1) {  // Si no tiene bloque asignado
+                int bloqueAsignado = this.disco.asignarBloques(1);  // Asignamos un bloque
+                if (bloqueAsignado != -1) {
+                    archivo.setPrimerBloque(bloqueAsignado);  // Guardamos el bloque asignado
+                    this.disco.marcarComoOcupado(bloqueAsignado);  // Marcamos el bloque como ocupado
+                }
+            }
+
+            archivoActual = archivoActual.getSiguiente();
+        }
+    }
+}
+}
+
+
