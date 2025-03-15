@@ -145,6 +145,15 @@ public class ActualizarArchivo extends javax.swing.JFrame {
             if (actual.getDato().getNombre().equals(nombreViejo)) {  
                 actual.getDato().setNombre(nombre); // Cambia el nombre del archivo  
                 JOptionPane.showMessageDialog(this, "Nombre modificado a: " + actual.getDato().getNombre(), "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Creando vistaDisco...");
+    viewDisco vistaDisco = new viewDisco(sistemaArchivos);
+    vistaDisco.actualizarVista();
+    vistaDisco.setVisible(true);
+    System.out.println("Ventana vistaDisco visible.");
+
+    // Actualizar vista
+    vistaDisco.actualizarVista();
+    System.out.println("Vista actualizada.");
                 break; // Sale del bucle después de modificar  
             }  
             actual = actual.getSiguiente(); 

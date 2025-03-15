@@ -219,22 +219,22 @@ public class CrearArchivo extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Crear archivo
-        String nombre=jTextField1.getText();
-        String nombreVerificacion=jTextField1.getText().trim();
-        String tamano=jTextField2.getText();
-        String color=(String) jComboBox1.getSelectedItem();
-        int tamanoINT=0;
-        
+        String nombre = jTextField1.getText();
+        String nombreVerificacion = jTextField1.getText().trim();
+        String tamano = jTextField2.getText();
+        String color = (String) jComboBox1.getSelectedItem();
+        int tamanoINT = 0;
+
         if (nombreVerificacion.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
+            JOptionPane.showMessageDialog(this, "El nombre no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        
+
         if (tamano.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Tamaño invalido", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
+            JOptionPane.showMessageDialog(this, "Tamaño invalido", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        
+
         try {
             tamanoINT = Integer.parseInt(tamano);
             if (tamanoINT <= 0) {
@@ -245,14 +245,28 @@ public class CrearArchivo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Tamaño debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         if (rutaSeleccionada == null || rutaSeleccionada.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Seleccione una ruta válida.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
+            JOptionPane.showMessageDialog(this, "Seleccione una ruta válida.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        
+
         sistemaArchivos.crearArchivo(nombre, tamanoINT, color, rutaSeleccionada);
         JOptionPane.showMessageDialog(this, "Archivo creado correctamente en: " + rutaSeleccionada);
+
+        System.out.println("Archivo creado correctamente.");
+
+// Crear la ventana de vistaDisco
+        System.out.println("Creando vistaDisco...");
+        viewDisco vistaDisco = new viewDisco(sistemaArchivos);
+        vistaDisco.setVisible(true);
+        System.out.println("Ventana vistaDisco visible.");
+
+// Actualizar vista
+        vistaDisco.actualizarVista();
+        System.out.println("Vista actualizada.");
+
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

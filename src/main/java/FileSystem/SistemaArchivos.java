@@ -51,6 +51,14 @@ public class SistemaArchivos {
         }
     }
      
+    public void eliminarArchivoEnDirectorio(Directorio directorio, Archivo archivo) {
+        if (archivo != null && archivo.getPrimerBloque() != 0) {
+            disco.liberarBloques(archivo.getPrimerBloque());
+            directorio.eliminarArchivo(archivo);
+        } else {
+            System.out.println("No se puede eliminar el archivo.");
+        }}
+    
     public Directorio buscarDirectorioPorRuta(Directorio actual, String rutaBuscada) {
         if (actual.obtenerRuta().equals(rutaBuscada)) {
             return actual;

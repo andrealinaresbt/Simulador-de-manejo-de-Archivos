@@ -146,15 +146,37 @@ public class EliminarArchivo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // Eliminar archivo
-        if (rutaPadre == null || rutaPadre.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Seleccione un archivo.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        Directorio directorio =sistemaArchivos.buscarDirectorioPorRuta(sistemaArchivos.getRaiz(), rutaPadre);
-        directorio.eliminarArchivo(archivo);
-        JOptionPane.showMessageDialog(this, "Archivo eliminado.", "Error", JOptionPane.ERROR_MESSAGE);
-        
+         // Eliminar archivo
+    if (rutaPadre == null || rutaPadre.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Seleccione un archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Buscar el directorio padre
+    Directorio directorio = sistemaArchivos.buscarDirectorioPorRuta(sistemaArchivos.getRaiz(), rutaPadre);
+    
+    if (directorio == null) {
+        JOptionPane.showMessageDialog(this, "El directorio no se encuentra.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // Llamar a eliminarArchivoEnDirectorio
+    sistemaArchivos.eliminarArchivoEnDirectorio(directorio, archivo);
+
+    JOptionPane.showMessageDialog(this, "Archivo eliminado.", "Exito", JOptionPane.INFORMATION_MESSAGE);
+    
+    // Crear la ventana de vistaDisco
+    System.out.println("Creando vistaDisco...");
+    viewDisco vistaDisco = new viewDisco(sistemaArchivos);
+    vistaDisco.actualizarVista();
+    vistaDisco.setVisible(true);
+    System.out.println("Ventana vistaDisco visible.");
+
+    // Actualizar vista
+    vistaDisco.actualizarVista();
+    System.out.println("Vista actualizada.");
+
+       
     }//GEN-LAST:event_jButton2ActionPerformed
     
     private String obtenerRutaDesdeNodo(DefaultMutableTreeNode node) {

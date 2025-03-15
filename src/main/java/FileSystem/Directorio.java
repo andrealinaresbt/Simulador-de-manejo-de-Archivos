@@ -1,5 +1,6 @@
 package FileSystem;
 
+import Almacenamiento.Disco;
 import EDD.LinkedList; // Asegúrate de que esta clase esté correctamente implementada
 
 /**
@@ -12,6 +13,7 @@ public class Directorio {
     private LinkedList<Archivo> archivos;  // Lista de archivos dentro del directorio
     private LinkedList<Directorio> subdirectorios;  // Lista de subdirectorios dentro del directorio
     private Directorio padre;
+    private Disco disco;  // Referencia a Disco
 
     public Directorio(String nombre, Directorio padre) {
         this.nombre = nombre;
@@ -32,9 +34,11 @@ public class Directorio {
 
     // Método para eliminar un archivo del directorio
     public boolean eliminarArchivo(Archivo archivo) {
-        // Llama al método remove() de LinkedList para eliminar el archivo
-        return archivos.remove(archivo);  // Devuelve true si se eliminó el archivo
-    }
+    
+    return archivos.remove(archivo);  // Devuelve true si el archivo se eliminó correctamente
+}
+
+
 
     // Método para eliminar un subdirectorio del directorio
     public boolean eliminarDirectorio(Directorio directorio) {

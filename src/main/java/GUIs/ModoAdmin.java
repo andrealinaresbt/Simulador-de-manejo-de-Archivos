@@ -40,6 +40,7 @@ public class ModoAdmin extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        viewSD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,6 +103,13 @@ public class ModoAdmin extends javax.swing.JFrame {
             }
         });
 
+        viewSD.setText("Ver bloques");
+        viewSD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewSDActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,7 +123,8 @@ public class ModoAdmin extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(viewSD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(329, 329, 329))
             .addGroup(layout.createSequentialGroup()
                 .addGap(278, 278, 278)
@@ -143,7 +152,9 @@ public class ModoAdmin extends javax.swing.JFrame {
                 .addComponent(jButton5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(viewSD)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
         );
@@ -201,6 +212,21 @@ public class ModoAdmin extends javax.swing.JFrame {
         eliminarDirectorio.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void viewSDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewSDActionPerformed
+         System.out.println("Creando vistaDisco...");
+viewDisco vistaDisco = new viewDisco(sistemaArchivos);
+vistaDisco.actualizarVista();
+vistaDisco.setVisible(true);
+System.out.println("Ventana vistaDisco visible.");
+
+// Actualizar vista
+vistaDisco.actualizarVista();
+System.out.println("Vista actualizada.");
+
+                            
+
+    }//GEN-LAST:event_viewSDActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -246,5 +272,6 @@ public class ModoAdmin extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton viewSD;
     // End of variables declaration//GEN-END:variables
 }

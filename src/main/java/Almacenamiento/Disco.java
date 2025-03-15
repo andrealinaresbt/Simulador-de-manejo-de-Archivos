@@ -51,21 +51,32 @@ public class Disco {
     }
 
     public void liberarBloques(int primerBloque) {
-        if (primerBloque < 0 || primerBloque >= bloques.length || !ocupado[primerBloque]) {
-            System.out.println("Error: Intentando liberar un bloque inválido o ya libre.");
-            return;
-        }
-
-        Bloque actual = bloques[primerBloque];
-
-        while (actual != null && ocupado[actual.getId()]) {
-            ocupado[actual.getId()] = false;
-            bloquesLibres++;
-            actual = actual.getSiguiente();
-        }
+    if (primerBloque < 0 || primerBloque >= bloques.length || !ocupado[primerBloque]) {
+        System.out.println("Error: Intentando liberar un bloque inválido o ya libre.");
+        return;
     }
+
+    Bloque actual = bloques[primerBloque];
+    System.out.println("Liberando bloques a partir del bloque: " + primerBloque);
+
+    while (actual != null && ocupado[actual.getId()]) {
+        System.out.println("Liberando bloque con ID: " + actual.getId());
+        ocupado[actual.getId()] = false;  // Marca el bloque como libre
+        bloquesLibres++;
+        actual = actual.getSiguiente();
+    }
+}
+
 
     public boolean hayEspacio(int cantidad) {
         return cantidad <= bloquesLibres;
     }
+    public int getTotalBloques() {
+    return bloques.length;
+}
+
+    public boolean[] getOcupado() {
+        return ocupado;
+    }
+
 }

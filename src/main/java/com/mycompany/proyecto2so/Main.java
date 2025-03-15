@@ -8,6 +8,7 @@ import FileSystem.Directorio;
 import FileSystem.SistemaArchivos;
 import GUIs.ModoAdmin;
 import GUIs.ModoUsuario;
+import GUIs.viewDisco;
 import javax.swing.JOptionPane;
 /**
  *
@@ -17,7 +18,7 @@ public class Main {
 
     public static void main(String[] args) {
         //pruebas main
-        SistemaArchivos sistema = new SistemaArchivos(1000000);
+        SistemaArchivos sistema = new SistemaArchivos(100);
         Directorio docs = new Directorio("Documentos", sistema.getRaiz());
         sistema.getRaiz().agregarDirectorio(docs);
 
@@ -50,11 +51,20 @@ public class Main {
         String modo = (choice == 1) ? "admin" : "usuario";
         
         if (modo.equals("admin")) {
+             System.out.println("Creando vistaDisco...");
+viewDisco vistaDisco = new viewDisco(sistema);
+vistaDisco.setVisible(true);
+System.out.println("Ventana vistaDisco visible.");
+
+// Actualizar vista
+vistaDisco.actualizarVista();
+System.out.println("Vista actualizada.");
             ModoAdmin modoAdmin=new ModoAdmin(sistema);
             modoAdmin.setVisible(true);
             
         } 
         else if (modo.equals("usuario")) {
+          
             ModoUsuario modoUsuario= new ModoUsuario(sistema);
             modoUsuario.setVisible(true);
         }
