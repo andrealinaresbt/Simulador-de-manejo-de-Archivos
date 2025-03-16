@@ -4,8 +4,10 @@
  */
 package GUIs;
 
+import FileSystem.Archivo;
 import FileSystem.Directorio;
 import FileSystem.SistemaArchivos;
+import GUIs.viewDisco;
 import java.awt.BorderLayout;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -146,19 +148,29 @@ public class EliminarDirectorio extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Directorio seleccionado invalido", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        Directorio padre=directorio.getPadre();
-        
-        padre.eliminarDirectorio(directorio);
-        JOptionPane.showMessageDialog(this, "Directorio eliminado", "Error", JOptionPane.ERROR_MESSAGE);
-          System.out.println("Creando vistaDisco...");
+        // **Eliminar todos los archivos en el directorio antes de eliminarlo**
+    while (directorio.getPrimerArchivo() != null) {
+        Archivo archivoAEliminar = directorio.getPrimerArchivo();
+        sistemaArchivos.eliminarArchivoEnDirectorio(directorio, archivoAEliminar);
+    }
+
+    // Eliminar el directorio del padre
+    Directorio padre = directorio.getPadre();
+    padre.eliminarDirectorio(directorio);
+    
+    JOptionPane.showMessageDialog(this, "Directorio eliminado", "Información", JOptionPane.INFORMATION_MESSAGE);
+
+    // Actualizar la vista del disco
+    System.out.println("Creando vistaDisco...");
     viewDisco vistaDisco = new viewDisco(sistemaArchivos);
     vistaDisco.actualizarVista();
     vistaDisco.setVisible(true);
     System.out.println("Ventana vistaDisco visible.");
-
-    // Actualizar vista
+    
+    // Actualizar la vista nuevamente
     vistaDisco.actualizarVista();
     System.out.println("Vista actualizada.");
+
     }//GEN-LAST:event_jButton2ActionPerformed
     
     //️ Método para obtener la ruta desde el nodo seleccionado
