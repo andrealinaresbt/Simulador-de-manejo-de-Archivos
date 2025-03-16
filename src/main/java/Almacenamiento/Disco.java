@@ -49,6 +49,15 @@ public class Disco {
 
         return primerBloque;
     }
+public int obtenerSiguienteBloque(int bloqueActual) {
+    if (bloqueActual < 0 || bloqueActual >= bloques.length) {
+        System.out.println("Error: Índice de bloque fuera de rango.");
+        return -1;
+    }
+
+    Bloque siguiente = bloques[bloqueActual].getSiguiente();
+    return (siguiente != null) ? siguiente.getId() : -1; 
+}
 
     public void liberarBloques(int primerBloque) {
     if (primerBloque < 0 || primerBloque >= bloques.length || !ocupado[primerBloque]) {

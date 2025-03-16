@@ -64,15 +64,24 @@ public class SistemaArchivos {
         }
     }
      
-    public void eliminarArchivoEnDirectorio(Directorio directorio, Archivo archivo) {
-        if (archivo != null && archivo.getPrimerBloque() != 0) {
-            disco.liberarBloques(archivo.getPrimerBloque());
-            directorio.eliminarArchivo(archivo);
-        } else {
-            System.out.println("No se puede eliminar el archivo.");
-             JOptionPane.showMessageDialog(null, "No se puede eliminar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
-        }}
-    
+   public void eliminarArchivoEnDirectorio(Directorio directorio, Archivo archivo) {
+    if (archivo != null && archivo.getPrimerBloque() != -1) {
+        int bloqueActual = archivo.getPrimerBloque();
+
+        while (bloqueActual != -1) {
+            int siguienteBloque = disco.obtenerSiguienteBloque(bloqueActual);
+            disco.liberarBloques(bloqueActual);
+            bloqueActual = siguienteBloque;
+        }
+
+        directorio.eliminarArchivo(archivo);
+    } else {
+        System.out.println("No se puede eliminar el archivo.");
+        JOptionPane.showMessageDialog(null, "No se puede eliminar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+
     public Directorio buscarDirectorioPorRuta(Directorio actual, String rutaBuscada) {
         if (actual.obtenerRuta().equals(rutaBuscada)) {
             return actual;
