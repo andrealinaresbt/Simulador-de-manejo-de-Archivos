@@ -42,13 +42,29 @@ public class Directorio {
     return archivos.remove(archivo);  // Devuelve true si el archivo se eliminó correctamente
 }
 
-
-
-    // Método para eliminar un subdirectorio del directorio
-    public boolean eliminarDirectorio(Directorio directorio) {
-        // Llama al método remove() de LinkedList para eliminar el subdirectorio
-        return subdirectorios.remove(directorio);  // Devuelve true si se eliminó el subdirectorio
+public Archivo getPrimerArchivo() {
+    if (archivos == null || archivos.getCabeza() == null) {
+        return null;  // Retorna null si la lista no está inicializada o está vacía
     }
+    return archivos.getCabeza().getDato();  // Retorna el primer archivo
+}
+
+
+   public boolean eliminarDirectorio(Directorio directorio) {
+    if (directorio == null) {
+        return false;
+    }
+
+    // Eliminar archivos del directorio antes de eliminarlo
+    while (directorio.getPrimerArchivo() != null) {
+        directorio.eliminarArchivo(directorio.getPrimerArchivo());
+    }
+
+    // Ahora eliminar el subdirectorio
+    return subdirectorios.remove(directorio);
+}
+
+
     
     public String obtenerRuta() {
         if (this.padre == null) { // Si no tiene padre, es la raíz

@@ -150,6 +150,15 @@ public class EliminarDirectorio extends javax.swing.JFrame {
         
         padre.eliminarDirectorio(directorio);
         JOptionPane.showMessageDialog(this, "Directorio eliminado", "Error", JOptionPane.ERROR_MESSAGE);
+          System.out.println("Creando vistaDisco...");
+    viewDisco vistaDisco = new viewDisco(sistemaArchivos);
+    vistaDisco.actualizarVista();
+    vistaDisco.setVisible(true);
+    System.out.println("Ventana vistaDisco visible.");
+
+    // Actualizar vista
+    vistaDisco.actualizarVista();
+    System.out.println("Vista actualizada.");
     }//GEN-LAST:event_jButton2ActionPerformed
     
     //️ Método para obtener la ruta desde el nodo seleccionado
