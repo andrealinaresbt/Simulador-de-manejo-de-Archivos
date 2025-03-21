@@ -26,6 +26,7 @@ public class ModoAdmin extends javax.swing.JFrame {
      */
     public ModoAdmin(SistemaArchivos sistemaArchivos) {
         this.sistemaArchivos=sistemaArchivos;
+        
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -215,7 +216,7 @@ public class ModoAdmin extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // crear directorio
-        CrearDirectorio crearDirectorio=new CrearDirectorio(sistemaArchivos);
+        CrearDirectorio crearDirectorio=new CrearDirectorio(sistemaArchivos,sistemaArchivos.getAuditoria());
         crearDirectorio.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -358,20 +359,20 @@ sistemaArchivos.guardarEstadoEnArchivoJSON("TXT/ArchivoEstado.json");
              // Crear una instancia de la clase que contiene el método guardarEstadoEnArchivoTexto
 sistemaArchivos.cargarEstadoDesdeArchivoJSON("TXT/ArchivoEstado.json");
 // Crear la ventana de vistaDisco
-    System.out.println("Creando vistaDisco...");
+   // System.out.println("Creando vistaDisco...");
     viewDisco vistaDisco = new viewDisco(sistemaArchivos);
     vistaDisco.actualizarVista();
     vistaDisco.setVisible(true);
-    System.out.println("Ventana vistaDisco visible.");
+  //  System.out.println("Ventana vistaDisco visible.");
 
     // Actualizar vista
     vistaDisco.actualizarVista();
-    System.out.println("Vista actualizada.");
+    //System.out.println("Vista actualizada.");
     
     // Crear una instancia de la clase TablaAsignacionArchivos para actualizar la tabla
     TablaAsignacionArchivos tablaAsignacion = new TablaAsignacionArchivos(sistemaArchivos);
     tablaAsignacion.actualizarTabla();  // Llamar al método para actualizar la tabla
-    System.out.println("Tabla actualizada.");
+//    System.out.println("Tabla actualizada.");
 
     // Obtener la tabla actualizada
     JTable tabla = tablaAsignacion.getTabla();

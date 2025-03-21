@@ -183,7 +183,7 @@ public class ActualizarDirectorio extends javax.swing.JFrame {
         }
         directorio.setNombre(nombre);
         JOptionPane.showMessageDialog(this, "Directorio actualizado", "Error", JOptionPane.ERROR_MESSAGE);
-        
+        directorio.getAuditoria().registrarOperacion("Usuario", "Directorio modificado: " + directorio.getNombre());
     }//GEN-LAST:event_jButton2ActionPerformed
     
 //️ Método para obtener la ruta desde el nodo seleccionado

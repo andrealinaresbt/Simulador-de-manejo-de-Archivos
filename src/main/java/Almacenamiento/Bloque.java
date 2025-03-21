@@ -11,10 +11,17 @@ package Almacenamiento;
 public class Bloque {
     private int id;
     private Bloque siguiente; // Para asignación encadenada
+    private boolean ocupado;
 
     public Bloque(int id) {
         this.id = id;
         this.siguiente = null;
+    }
+    public Bloque(int id, boolean ocupado, int siguienteBloqueId){
+     this.id = id;
+        this.siguiente.id = siguienteBloqueId;
+        this.ocupado= ocupado;
+        
     }
 
     public int getId() {

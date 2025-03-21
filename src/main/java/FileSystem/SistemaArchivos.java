@@ -5,6 +5,7 @@
 package FileSystem;
 
 import Almacenamiento.Disco;
+import Auditoria.Auditoria;
 import EDD.LinkedList;
 import EDD.Node;
 import FileSystem.Directorio;
@@ -30,30 +31,49 @@ public class SistemaArchivos {
 
     private Directorio raiz;
     private Disco disco;
+    private Auditoria auditoria;
 
-    public SistemaArchivos(int tamanoDisco) {
-        this.raiz = new Directorio("Raiz",null);
+    public SistemaArchivos(int tamanoDisco, Auditoria auditoria) {
+        this.raiz = new Directorio("Raiz",null, auditoria);
         this.disco = new Disco(tamanoDisco);
+        this.auditoria = auditoria;
     }
 
     public void crearArchivo(String nombre, int tamano, String color, String rutaDirectorio) {
-        if (!disco.hayEspacio(tamano)) {
-            System.out.println("No hay espacio suficiente en el disco.");
-             JOptionPane.showMessageDialog(null, "No hay espacio suficiente en el disco.", "Error", JOptionPane.ERROR_MESSAGE);
-            ;
-        }
-
-        Directorio dirSeleccionado = buscarDirectorioPorRuta(raiz, rutaDirectorio);
-        if (dirSeleccionado == null) {
-            System.out.println("Directorio no encontrado.");
-             JOptionPane.showMessageDialog(null, "Directorio no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int primerBloque = disco.asignarBloques(tamano);
-        Archivo nuevoArchivo = new Archivo(nombre, tamano, primerBloque, color);
-        dirSeleccionado.agregarArchivo(nuevoArchivo);
+    if (!disco.hayEspacio(tamano)) {
+        System.out.println("No hay espacio suficiente en el disco.");
+        JOptionPane.showMessageDialog(null, "No hay espacio suficiente en el disco.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
+
+    Directorio dirSeleccionado = buscarDirectorioPorRuta(raiz, rutaDirectorio);
+    if (dirSeleccionado == null) {
+        System.out.println("Directorio no encontrado.");
+        JOptionPane.showMessageDialog(null, "Directorio no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Asignar bloques y obtener el primer bloque
+    int primerBloque = disco.asignarBloques(tamano);
+
+    if (primerBloque == -1) {
+        System.out.println("Error al asignar bloques.");
+        return;
+    }
+
+    // Crear archivo con los bloques asignados
+    Archivo nuevoArchivo = new Archivo(nombre, tamano, primerBloque, color);
+    String usuario = System.getProperty("user.name");
+
+    // Agregar archivo al directorio seleccionado
+    dirSeleccionado.agregarArchivo(nuevoArchivo, usuario);
+
+    // Registrar operación en auditoría
+    String operacion = "Archivo " + nombre + " creado en directorio " + rutaDirectorio;
+    auditoria.registrarOperacion(operacion, usuario);
+}
+
+
 
     public void mostrarArchivos() {
         Node<Archivo> actual = raiz.getArchivos().getCabeza();
@@ -64,22 +84,47 @@ public class SistemaArchivos {
         }
     }
      
-   public void eliminarArchivoEnDirectorio(Directorio directorio, Archivo archivo) {
+public void eliminarArchivoEnDirectorio(Directorio directorio, Archivo archivo) {
     if (archivo != null && archivo.getPrimerBloque() != -1) {
         int bloqueActual = archivo.getPrimerBloque();
+        System.out.println("Liberando bloques a partir del bloque: " + bloqueActual);
 
+        // Mientras haya bloques asociados al archivo, liberar cada uno de ellos
         while (bloqueActual != -1) {
-            int siguienteBloque = disco.obtenerSiguienteBloque(bloqueActual);
+            System.out.println("Liberando bloque con ID: " + bloqueActual);
+
+            // Liberar el bloque actual
             disco.liberarBloques(bloqueActual);
-            bloqueActual = siguienteBloque;
+            System.out.println("Bloque " + bloqueActual + " liberado.");
+
+            // Obtener el siguiente bloque asociado
+            bloqueActual = disco.obtenerSiguienteBloque(bloqueActual);
+
+            // Si el siguiente bloque es -1, significa que hemos llegado al final de los bloques del archivo
+            if (bloqueActual == -1) {
+                System.out.println("No hay más bloques asociados al archivo.");
+            }
         }
 
-        directorio.eliminarArchivo(archivo);
+        // Después de liberar todos los bloques, eliminar el archivo del directorio
+        String usuario = System.getProperty("user.name"); // Obtener el nombre del usuario
+        directorio.eliminarArchivo(archivo, usuario);
+
+        // Registrar la operación de auditoría
+        if (auditoria != null) {
+            auditoria.registrarOperacion(usuario, "Archivo eliminado: " + archivo.getNombre());
+        } else {
+            System.out.println("Error: Auditoría no inicializada.");
+        }
+
     } else {
-        System.out.println("No se puede eliminar el archivo.");
+        // En caso de que el archivo no sea válido o no tenga bloques asociados
+        System.out.println("No se puede eliminar el archivo. No tiene bloques asignados.");
         JOptionPane.showMessageDialog(null, "No se puede eliminar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
+
+
 
 
     public Directorio buscarDirectorioPorRuta(Directorio actual, String rutaBuscada) {
@@ -289,6 +334,10 @@ private void asignarBloquesAFiles(Directorio directorio) {
         }
     }
 }
+
+    public Auditoria getAuditoria() {
+        return auditoria;
+    }
 }
 
 

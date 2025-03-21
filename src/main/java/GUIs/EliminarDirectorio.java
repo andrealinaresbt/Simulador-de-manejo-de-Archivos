@@ -161,15 +161,15 @@ public class EliminarDirectorio extends javax.swing.JFrame {
     JOptionPane.showMessageDialog(this, "Directorio eliminado", "Información", JOptionPane.INFORMATION_MESSAGE);
 
     // Actualizar la vista del disco
-    System.out.println("Creando vistaDisco...");
+    //System.out.println("Creando vistaDisco...");
     viewDisco vistaDisco = new viewDisco(sistemaArchivos);
     vistaDisco.actualizarVista();
     vistaDisco.setVisible(true);
-    System.out.println("Ventana vistaDisco visible.");
+   // System.out.println("Ventana vistaDisco visible.");
     
     // Actualizar la vista nuevamente
     vistaDisco.actualizarVista();
-    System.out.println("Vista actualizada.");
+    //System.out.println("Vista actualizada.");
 
     }//GEN-LAST:event_jButton2ActionPerformed
     

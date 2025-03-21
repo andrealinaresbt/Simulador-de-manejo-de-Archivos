@@ -24,31 +24,36 @@ public class Disco {
         }
     }
 
-    public int asignarBloques(int cantidad) {
-        if (cantidad > bloquesLibres) {
-            System.out.println("Error: No hay suficientes bloques disponibles.");
-            return -1;
-        }
-
-        int primerBloque = -1, anterior = -1;
-
-        for (int i = 0; i < bloques.length && cantidad > 0; i++) {
-            if (!ocupado[i]) {
-                if (primerBloque == -1) {
-                    primerBloque = i;
-                }
-                if (anterior != -1) {
-                    bloques[anterior].setSiguiente(bloques[i]);
-                }
-                anterior = i;
-                ocupado[i] = true;
-                cantidad--;
-                bloquesLibres--;
-            }
-        }
-
-        return primerBloque;
+public int asignarBloques(int cantidad) {
+    if (cantidad > bloquesLibres) {
+        System.out.println("Error: No hay suficientes bloques disponibles.");
+        return -1;
     }
+
+    int primerBloque = -1, anterior = -1;
+
+    for (int i = 0; i < bloques.length && cantidad > 0; i++) {
+        if (!ocupado[i]) {
+            if (primerBloque == -1) {
+                primerBloque = i;
+            }
+            if (anterior != -1) {
+                bloques[anterior].setSiguiente(bloques[i]);
+            }
+            anterior = i;
+            ocupado[i] = true;
+            cantidad--;
+            bloquesLibres--;
+        }
+    }
+
+    return primerBloque;
+}
+
+
+    
+
+            
 public int obtenerSiguienteBloque(int bloqueActual) {
     if (bloqueActual < 0 || bloqueActual >= bloques.length) {
         System.out.println("Error: Índice de bloque fuera de rango.");
@@ -59,9 +64,9 @@ public int obtenerSiguienteBloque(int bloqueActual) {
     return (siguiente != null) ? siguiente.getId() : -1; 
 }
 
-    public void liberarBloques(int primerBloque) {
+public void liberarBloques(int primerBloque) {
+    
     if (primerBloque < 0 || primerBloque >= bloques.length || !ocupado[primerBloque]) {
-        System.out.println("Error: Intentando liberar un bloque inválido o ya libre.");
         return;
     }
 
@@ -70,11 +75,22 @@ public int obtenerSiguienteBloque(int bloqueActual) {
 
     while (actual != null && ocupado[actual.getId()]) {
         System.out.println("Liberando bloque con ID: " + actual.getId());
-        ocupado[actual.getId()] = false;  // Marca el bloque como libre
+        ocupado[actual.getId()] = false;
         bloquesLibres++;
-        actual = actual.getSiguiente();
+        actual = actual.getSiguiente();  // Avanzamos al siguiente bloque
     }
-} public void setOcupado(boolean[] estadoOcupado) {
+}
+public void marcarComoLibre(int bloque) {
+    if (bloque >= 0 && bloque < this.getOcupado().length) {
+        this.getOcupado()[bloque] = false;  // Marcamos el bloque como libre
+        System.out.println("Bloque " + bloque + " marcado como libre.");
+    } else {
+        System.out.println("Índice de bloque inválido: " + bloque);
+    }
+}
+
+
+public void setOcupado(boolean[] estadoOcupado) {
         if (estadoOcupado != null && estadoOcupado.length == ocupado.length) {
             System.arraycopy(estadoOcupado, 0, this.ocupado, 0, estadoOcupado.length);
         } else {
@@ -110,5 +126,9 @@ public void marcarComoOcupado(int bloque) {
         System.out.println("Error: Índice de bloque fuera de rango.");
     }
 }
+
+    public Bloque[] getBloques() {
+        return bloques;
+    }
 
 }

@@ -151,20 +151,21 @@ public class ActualizarArchivo extends javax.swing.JFrame {
             if (actual.getDato().getNombre().equals(nombreViejo)) {  
                 actual.getDato().setNombre(nombre); // Cambia el nombre del archivo  
                 JOptionPane.showMessageDialog(this, "Nombre modificado a: " + actual.getDato().getNombre(), "Error", JOptionPane.ERROR_MESSAGE);
-                System.out.println("Creando vistaDisco...");
+                 directorio.getAuditoria().registrarOperacion("Usuario", "Archivo modificado: " + directorio.getNombre());
+// System.out.println("Creando vistaDisco...");
     viewDisco vistaDisco = new viewDisco(sistemaArchivos);
     vistaDisco.actualizarVista();
     vistaDisco.setVisible(true);
-    System.out.println("Ventana vistaDisco visible.");
+    //System.out.println("Ventana vistaDisco visible.");
 
     // Actualizar vista
     vistaDisco.actualizarVista();
-    System.out.println("Vista actualizada.");
+   // System.out.println("Vista actualizada.");
     
     // Crear una instancia de la clase TablaAsignacionArchivos para actualizar la tabla
     TablaAsignacionArchivos tablaAsignacion = new TablaAsignacionArchivos(sistemaArchivos);
     tablaAsignacion.actualizarTabla();  // Llamar al método para actualizar la tabla
-    System.out.println("Tabla actualizada.");
+   // System.out.println("Tabla actualizada.");
 
     // Obtener la tabla actualizada
     JTable tabla = tablaAsignacion.getTabla();

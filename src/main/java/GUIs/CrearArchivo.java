@@ -78,6 +78,8 @@ public class CrearArchivo extends javax.swing.JFrame {
         dialog.setSize(400, 500);
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);  
+        
+       
     }
 
     //️ Método para obtener la ruta desde el nodo seleccionado
@@ -275,19 +277,19 @@ public class CrearArchivo extends javax.swing.JFrame {
     JOptionPane.showMessageDialog(this, "Archivo creado correctamente en: " + rutaSeleccionada);
 
     // Crear la ventana de vistaDisco
-    System.out.println("Creando vistaDisco...");
+    //System.out.println("Creando vistaDisco...");
     viewDisco vistaDisco = new viewDisco(sistemaArchivos);
     vistaDisco.setVisible(true);
-    System.out.println("Ventana vistaDisco visible.");
+    //System.out.println("Ventana vistaDisco visible.");
 
     // Actualizar vista
     vistaDisco.actualizarVista();
-    System.out.println("Vista actualizada.");
+    //System.out.println("Vista actualizada.");
 
     // Crear una instancia de la clase TablaAsignacionArchivos para actualizar la tabla
     TablaAsignacionArchivos tablaAsignacion = new TablaAsignacionArchivos(sistemaArchivos);
     tablaAsignacion.actualizarTabla();  // Llamar al método para actualizar la tabla
-    System.out.println("Tabla actualizada.");
+    //System.out.println("Tabla actualizada.");
 
     // Obtener la tabla actualizada
     JTable tabla = tablaAsignacion.getTabla();

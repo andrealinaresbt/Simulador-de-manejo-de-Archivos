@@ -4,6 +4,7 @@
  */
 package GUIs;
 
+import Auditoria.Auditoria;
 import FileSystem.Directorio;
 import FileSystem.SistemaArchivos;
 import java.awt.BorderLayout;
@@ -23,13 +24,15 @@ public class CrearDirectorio extends javax.swing.JFrame {
     private static SistemaArchivos sistemaArchivos;
     private String rutaSeleccionada;
     private Directorio directorio;
+    private static Auditoria auditoria;
     /**
      * Creates new form CrearDirectorio
      */
-    public CrearDirectorio(SistemaArchivos sistemaArchivos) {
+    public CrearDirectorio(SistemaArchivos sistemaArchivos, Auditoria auditoria) {
         this.sistemaArchivos=sistemaArchivos;
         initComponents();
         setLocationRelativeTo(null);
+        this.auditoria = auditoria;
     }
 
     /**
@@ -163,7 +166,7 @@ public class CrearDirectorio extends javax.swing.JFrame {
         return;
         }
  
-        Directorio nuevoDirectorio=new Directorio(nombre,directorio);
+        Directorio nuevoDirectorio=new Directorio(nombre,directorio, sistemaArchivos.getAuditoria());
         directorio.agregarDirectorio(nuevoDirectorio);
         JOptionPane.showMessageDialog(this, "Directorio creado correctamente en: " + rutaSeleccionada);      
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -217,7 +220,7 @@ public class CrearDirectorio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CrearDirectorio(sistemaArchivos).setVisible(true);
+                new CrearDirectorio(sistemaArchivos, auditoria).setVisible(true);
             }
         });
     }

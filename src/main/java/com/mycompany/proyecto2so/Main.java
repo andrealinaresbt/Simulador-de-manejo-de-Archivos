@@ -4,6 +4,7 @@
 
 package com.mycompany.proyecto2so;
 
+import Auditoria.Auditoria;
 import FileSystem.Directorio;
 import FileSystem.SistemaArchivos;
 import GUIs.ModoAdmin;
@@ -18,16 +19,18 @@ public class Main {
 
     public static void main(String[] args) {
         //pruebas main
-        SistemaArchivos sistema = new SistemaArchivos(100);
-        Directorio docs = new Directorio("Documentos", sistema.getRaiz());
-        sistema.getRaiz().agregarDirectorio(docs);
+        Auditoria auditoria = new Auditoria();
+        SistemaArchivos sistema = new SistemaArchivos(100, auditoria);
+        //sistema.cargarEstadoDesdeArchivoJSON("TXT/ArchivoEstado.json");
+        Directorio docs = new Directorio("Documentos", sistema.getRaiz(), auditoria);
+        //sistema.getRaiz().agregarDirectorio(docs);
 
-        Directorio proyectos = new Directorio("Proyectos", docs);
-        docs.agregarDirectorio(proyectos);
+        Directorio proyectos = new Directorio("Proyectos", docs, auditoria);
+        //docs.agregarDirectorio(proyectos);
         
-        Directorio proyectos2 = new Directorio("Proyectos2", proyectos);
+        Directorio proyectos2 = new Directorio("Proyectos2", proyectos, auditoria);
         proyectos.agregarDirectorio(proyectos2);   
-        sistema.crearArchivo("tarea1.txt", 5, "azul", "/Raiz/Documentos");
+        //sistema.crearArchivo("tarea1.txt", 5, "azul", "/Raiz/Documentos");
 
 
         //------------------------------------------------------------------
